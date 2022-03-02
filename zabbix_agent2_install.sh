@@ -18,9 +18,9 @@ wget wget https://repo.zabbix.com/zabbix/5.4/rhel/7/x86_64/zabbix-agent2-5.4.10-
 rpm -i zabbix-agent2-5.4.10-1.el7.x86_64.rpm
 yum install -y zabbix-agent2
 #Configuration
-echo $'Configure agent'
 mv /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak
 nano /etc/zabbix/zabbix_agent2.conf
+echo "
 ############ GENERAL PARAMETERS #################
 
 PidFile=/var/run/zabbix/zabbix_agent2.pid
@@ -50,6 +50,7 @@ ControlSocket=/tmp/agent.sock
 ### Option: DenyKey
 # DenyKey=system.run[*]
 AllowKey=system.run[*]
+" > /etc/zabbix/zabbix_agent2.conf
 
 
 #Start service zabbix agent
