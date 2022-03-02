@@ -8,6 +8,8 @@
 #       $ ./zabbix_agent_install.sh
 # ----------------------------------------------------------------#
 #Server data
+zbdir=/etc/zabbix/
+zbconf=/etc/zabbix/zabbix_agent2.conf
 echo -n "Digite o nome do seu Hostname: "
 read hostname
 #echo -n "Digite o endereço IP Zabbix Server: "
@@ -18,7 +20,10 @@ wget wget https://repo.zabbix.com/zabbix/5.4/rhel/7/x86_64/zabbix-agent2-5.4.10-
 rpm -i zabbix-agent2-5.4.10-1.el7.x86_64.rpm
 yum install -y zabbix-agent2
 #Configuration
-echo "
+echo $'Configure agent'
+cd $zbdir
+cp $zbconf $zbconf.ORIG
+echo "" > $zbconf
 PidFile=/var/run/zabbix/zabbix_agent2.pid
 LogFile=/var/log/zabbix/zabbix_agent2.log
 LogFileSize=0
@@ -45,7 +50,8 @@ ControlSocket=/tmp/agent.sock
 ### Option: DenyKey
 # DenyKey=system.run[*]
 AllowKey=system.run[*]
-" > /etc/zabbix/zabbix_agentd.conf
+" > /etc/zabbix/zabbix_agent2.conf
+
 #Start service zabbix agent
 systemctl start zabbix-agent2
 systemctl enable zabbix-agent2
